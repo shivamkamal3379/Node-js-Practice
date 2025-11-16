@@ -1,8 +1,5 @@
 const fs = require('fs');
 const filepath = "./tasks.json";
- 
-
-
 
  const loadTasks = () => {
     try{
@@ -12,19 +9,26 @@ const filepath = "./tasks.json";
 
     } catch(error){
         return []
-    }
+    } 
  }
 
 
-const saveTasks = (tasks)
+const saveTasks = (tasks)=> {
+  const dataJSON =  JSON.stringify(tasks)
+  fs.writeFileSync(filepath , dataJSON)
+}
+
+
 
 
 
 
 const addTask= (task)=>{
     const tasks = loadTasks()
-    tasks.push(tasks)
-     saveTasks(tasks)
+    tasks.push({task})
+    saveTasks(tasks)
+    console.log("Tasks added" , task )
+
 }
 
 const command = process.argv[2]
@@ -43,3 +47,4 @@ const argument = process.argv[3]
     console.log("command not found ");
     
   }
+  
