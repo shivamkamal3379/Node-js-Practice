@@ -1,15 +1,47 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const { log } = require("console");
 
 const port = 3000;
 
 const server = http.createServer((req, res) => {
-  //   req.url==='/' => 'index.html'
-  path.join(__dirname, req.url === "/" ? "" : "");
+  
+   const filepath = path.join(__dirname, req.url === "/" ? "index.html" : req.url);
+   console.log(filepath);
+   
+   const extName = ( path.extname(filepath)).toLowerCase()
+
+    const mineTypes = {
+      '.html' : 'text/html',
+      '.css' : 'text/css',
+      '.js' : 'text/javascript',
+      '.png' : 'text/png',
+    }
+
+     const myContentType  =mineTypes[extName] || 'application/octet=stream'
+
+    fs.readFile(filepath, (err, content) => {
+        if(err){
+            if(err.code === "ENOENT"){
+              res.writeHead(404 ,{ "Content-Type" : "text/html"});
+              res.end("404 : File nahi mil rahi  brooooo " )
+            }
+
+        }else{
+
+          res.writeHead(200 , { 'Content-Type' : myContentType})
+          res.end(content , 'utf-8') ; 
+
+
+        }
+
+    })      
+
+     
 });
 
 server.listen(port, () => {
-  console.log(`server  is listening on port ${port}`);
+  console.log(`server is listening on port ${port}`);
 });
-// this will be continues  tomorrow  only for a git message thsi was done only  for that 
+ 
