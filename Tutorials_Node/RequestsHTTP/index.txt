@@ -1,0 +1,35 @@
+HTTP GET
+ -> When you want to get Some Data from the Server 
+ -> by default the browser works on teh GET Method 
+    Meaning: “Give me something.”
+    Use: Fetch data from the server.
+    Example: Open a webpage, get user list.
+
+HTTP POST Requests
+ -> When You want to send and mutate some data in server
+ -> When We Fill some forms in a webpage 
+ -> we enter some Data in a DataBase 
+        Meaning: “Create something new.”
+        Use: Send data to create a new resource.
+        Example: Register a user, add a product.
+
+HTTP PUT Requests 
+ -> Updating  / replacing an exsisting resource 
+    Meaning: “Replace the whole thing.”
+    Use: Update an entire existing resource.
+    Example: Replace a user’s full profile.
+
+HTTP PATCH Requests
+ -> Updating  / modifying only a part (a little bit portion )
+    Example: Update just the email or name
+
+HTTP DELETE Requests
+ -> Removing / deleting a resource 
+    Use: Delete a resource.
+    Example: Delete a user or post.
+
+HTTP HEAD Requests
+ -> only heading / tittle 
+        Meaning: “Give me info about something, but not the content.”
+        Use: Check if a resource exists or get metadata.
+        

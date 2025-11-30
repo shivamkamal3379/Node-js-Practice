@@ -79,3 +79,5 @@
 1764512898962:/favicon.ico" New Request Received
 1764514132685:/search?search_query=prarthana+tic+tac+toe" New Request Received
 1764514132764:/favicon.ico" New Request Received
+1764517542000:/" New Request Received
+1764517542253:/favicon.ico" New Request Received
