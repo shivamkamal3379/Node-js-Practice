@@ -1,0 +1,11 @@
+{
+  "name": "httpserverbuilding",
+  "version": "1.0.0",
+  "description": "Buiding the HTTP Server ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "author": "",
+  "license": "ISC"
+}
