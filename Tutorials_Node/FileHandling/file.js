@@ -11,10 +11,10 @@ const  fs = require("fs");
   //async 
  // fs.writeFile("./test.txt" , " hello world async " , (err)=> {})
 //               reading file / extracting data from files 
-    const result = fs.readFileSync("./contact.txt" , "utf-8") ; 
+const result = fs.readFileSync("./contact.txt" , "utf-8") ; 
  console.log(result);
 
-
+ 
 
 //   if we did the same read file task via  "fs.readFile " then that would be not possible as second thing we have to  use a call back function in this a the callback is always expected from this for example 
 
