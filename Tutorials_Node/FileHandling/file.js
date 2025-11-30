@@ -1,11 +1,11 @@
 const  fs = require("fs");
+//creating files 
+
+        // .. sync 
 
 
 
 
-
-//            creating files 
-// .. sync 
  //fs.writeFileSync("./test.txt", " hey there ")
 
   //async 
@@ -44,7 +44,7 @@ fs.cpSync("./test.txt" , 'copy.txt' )
 
 
 
-// deleting files  using fs ,ethod unlink 
+// deleting files  using fs ,method unlink 
 // fs.unlinkSync("./copy.txt")
 
 // console.log(
