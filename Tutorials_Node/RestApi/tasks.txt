@@ -1,0 +1,20 @@
+REST API  - JSON 
+
+GET /users - HTML Document render
+GET /api/users - List all the users  in JSON
+
+GET/users/1 - Get User WIth ID 1 
+GET/users/2 - Get User WIth ID 2
+//dynamic  path parameters
+
+
+app.get/users/:id   ======>>>> matlab ye id ek variable hai jo dynamic hai 
+
+
+POST/users - Create a new User 
+
+PATCH /user/1 - Edit the user with id  1
+
+DELETE /users/1
+
+
