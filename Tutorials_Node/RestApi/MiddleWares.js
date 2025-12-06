@@ -8,9 +8,43 @@ const PORT = 5555 ;
 app.use(express.urlencoded({extended : false}));
 
 
+
+// using middlewares in this 
+
+
+
+app.use((req,res , next )=>{
+    console.log("hello from Middlewares  1"); 
+             // till this we hold the call upto us and not ending the response not passing the request
+   // return res.json({mgs : "hello from middlewares 1 "}); 
+            // here we are ending teh response an dnot calling teh another function
+            // but here if we call next(); that will pass my request from middleware 1 to iddle ware next present or to the  direct fucntion run 
+        // case 2 
+    req.myUserName = 'Shivamkamal.dev';
+        next();
+        // thats done passed teh request to next middleware prent 
+
+})
+
+
+app.use((req,res , next )=>{
+    //console.log("hello from Middlewares 2" ); 
+    // till this we hold the call upto us and not ending the response not passing the request
+        //case 2 
+    
+
+    console.log("hello from Middlewares 2"  , req.myUserName); 
+   // return res.json({mgs : "Helooooo"}); 
+       next();
+})
+// now going  to the direct routes 
+// as all the middlewares are passed 
+
+//--------------------------------------------------
 //routes
  app.get("/api/users" , (req, res)=> {
-     return res.json(users) ;
+    console.log("I am in get route " , req.myUserName);
+    return res.json(users) ;
 })
 
 
