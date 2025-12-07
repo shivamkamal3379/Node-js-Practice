@@ -60,6 +60,7 @@ app.post("/api/users" , (req,res)=>{
     const body = req.body;
    console.log("Body" , body)
  //  now adding this to my  mock data
+ // this will update the file 
     users.push({...body ,  id : users.length+1});
     fs.writeFile('./MOCK_DATA.json' , JSON.stringify(users) , (err , data)=> {
         return res.json({status : "Success" , id:users.length});
