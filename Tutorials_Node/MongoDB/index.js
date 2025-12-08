@@ -1,9 +1,41 @@
 const express = require("express");
 const users = require('./MOCK_DATA.json')
 const fs = require("fs")
-const app = express();
+const mongoose = require('mongoose');
 
+
+const app = express();
 const PORT = 5555 ; 
+
+// Schema 
+const userSchema = new mongoose.Schema({
+    firstName :
+        {
+            type : String ,
+            required: true ,
+        },
+    lastName :
+        {
+            type : String , 
+        },
+    email :
+        {
+            type : String , 
+            required : true , 
+            unique: true ,
+        },
+    jobTitle :
+        {
+            type : String , 
+        },
+    gender :
+        {
+            type : String , 
+        },
+})
+
+
+
 //MiddleWares -> Plugins
 app.use(express.urlencoded({extended : false}));
 
