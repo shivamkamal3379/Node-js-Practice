@@ -80,13 +80,11 @@ app.use((req,res , next )=>{
 
 //--------------------------------------------------
 //routes
- app.get("/api/users" , (req, res)=> {
-    console.log("I am in get route " , req.myUserName);
-    res.setHeader("X-MyName" , "Shivam Kamal");
-    // custom header 
-    // always add X to custom header
-    return res.json(users) ;
+ app.get("/api/users" ,async (req, res)=> {
+    const allDbUsers =  await User.find({})
+    return res.json(allDbUsers) ;
 })
+
 
 app.get("/users" , async(req , res)=> {
     const allDbUsers = await User.find({});
@@ -102,18 +100,21 @@ app.get("/users" , async(req , res)=> {
 
 app
     .route("/api/users/:id")
-    .get( (req, res)=> {
-        const id = Number(req.params.id);
-        const user = users.find(user =>  user.id ===id );
+    .get( async(req, res)=> {
+    const user = await User.findById(req.params.id);
+    if(!user) return res.status(404)
+
         return res.json(user);
         })
-    .patch((req, res)=> {
+    .patch(async(req, res)=> {
+        await User.findByIdAndUpdate(req.params.id , {lastName : "Changed"})
         //Edit user with user id 
-        return res.json({status: "Status Pending"});
+        return res.json({status: "Status Success"});
         })
-    .delete( (req, res)=> {
+    .delete( async(req, res)=> {
          //delete user with user id 
-        return res.json({status: "Status Pending"});
+        await User.findByIdAndDelete(req.params.id);
+         return res.json({status: "Status Success"});
         })
 
 
