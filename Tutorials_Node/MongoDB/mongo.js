@@ -1,5 +1,4 @@
 const express = require("express");
-const users = require('./MOCK_DATA.json')
 const fs = require("fs")
 const mongoose = require('mongoose');
 
@@ -42,7 +41,8 @@ const userSchema = new mongoose.Schema({
         {
             type : String , 
         },
-})
+} , {timestamps : true })
+
 
 
 const User = mongoose.model("user" , userSchema);
@@ -87,6 +87,16 @@ app.use((req,res , next )=>{
     // always add X to custom header
     return res.json(users) ;
 })
+
+app.get("/users" , async(req , res)=> {
+    const allDbUsers = await User.find({});
+    const html = `
+    <ul>
+    ${allDbUsers.map((user) => `<li>   ${user.firstName} -${user.email} </li>`)}
+    </ul>    `
+    res.send(html);
+})
+
 
 
 
@@ -158,11 +168,7 @@ app.post("/api/users", async(req, res) => {
 
 
  //  now adding this to my  mock data
-    users.push({...body ,  id : users.length+1});
-    fs.writeFile('./MOCK_DATA.json' , JSON.stringify(users) , (err , data)=> {
-        return res.json({status : "Success" , id:users.length});
-
-    })
+    
     
 })
 
