@@ -39,8 +39,8 @@ async function handleCreateUserById(req , res) {
     }
 
     const result  = await User.create({
-    firstName  : body.last_name ,
-    lastName :body.first_name , 
+    firstName :body.first_name , 
+    lastName  : body.last_name ,
     email: body.email,
     gender : body.gender , 
     jobTitle : body.job_title

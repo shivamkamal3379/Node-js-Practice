@@ -17,7 +17,7 @@ app.use(express.urlencoded({exteded: false}))
 app.use(logReqRes("log.txt")) ; 
 
 // routes 
-app.use("/api/user" , userRouter);
+app.use("/api/users" , userRouter);
 
 
 
