@@ -8,14 +8,16 @@ const app = express();
 const PORT = 5555 ; 
 
 // Connecting mongo db 
-connectMongoDb('mongodb://127.0.0.1:27017/youtube-app-1')
+connectMongoDb('mongodb://127.0.0.1:27017/youtube-app-1').then(()=>{
+    console.log("Mongo DB Conected ")
+})
 
 // middleWares
 app.use(express.urlencoded({exteded: false}))
 app.use(logReqRes("log.txt")) ; 
 
 // routes 
-app.use("/user" , userRouter);
+app.use("/api/user" , userRouter);
 
 
 
