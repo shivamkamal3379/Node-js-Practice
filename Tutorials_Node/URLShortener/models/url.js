@@ -10,7 +10,7 @@ const urlSchema = new mongoose.Schema
         },
         redirectURL : {
             type : String,
-            requird: true
+            required : true
         },
         visitHistory: [ {
             timestamp : {type : Number} }],
@@ -19,4 +19,4 @@ const urlSchema = new mongoose.Schema
 );
 
 const URL = mongoose.model("url" , urlSchema );
-module.exports = URL ; 
+module.exports = URL ;
