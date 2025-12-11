@@ -10,7 +10,7 @@ const staticRoute = require("./routes/staticRouter")
 
 connectToMongoDB('mongodb://localhost:27017/short-url')
 .then(()=>{
-    console.log("mongo DB Connected")
+    console.log("Mongo DB Connected Sucessfully !!")
 });
 
 
