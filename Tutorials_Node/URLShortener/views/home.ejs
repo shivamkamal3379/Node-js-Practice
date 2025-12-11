@@ -4,14 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container{
+            background: #ffffff;
+            padding: 40px 35px;
+            width: 100%;
+            max-width: 430px;
+            border-radius: 14px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1{
+            margin-bottom: 25px;
+            font-size: 26px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        label{
+            font-size: 15px;
+            color: #444;
+        }
+
+        input{
+            margin-top: 10px;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+            transition: 0.25s;
+        }
+
+        input:focus{
+            border-color: #1a73e8;
+            box-shadow: 0 0 4px rgba(26,115,232,0.4);
+        }
+
+        button{
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background: #1a73e8;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover{
+            background: #0f5ed7;
+        }
+
+        button:active{
+            transform: scale(0.97);
+        }
+    </style>
+
+
+
 </head>
 <body>
-    <h1> Hey from Server </h1>
-    <% urls.forEach(url =>{ %>
+    <h1> URL Shortner -by Shivam</h1>
+    <% if (locals.id) { %>
+     <p>     URL Genrated: http://localhost/url/<%= id %> </p>
+    <% } %>
+    <div>
+        <form method="POST" action="/url">
+            <label for="">Enter Your Original URL</label>
+            <input type="text" name="url" placeholder="https://example.com"/>
 
-        <li> <%= url.shortId %></li>
-    
-   <% }) %>
+            <button type="submit">Generate</button>
+
+        </form>
+    </div>
+     
    
 </body>
 </html>
