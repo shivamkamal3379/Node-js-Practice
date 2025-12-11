@@ -3,226 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkShrink | URL Shortener</title>
+    <title>Shorten.io | Premium Link Management</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary: #4f46e5; /* Indigo */
-            --primary-hover: #4338ca;
-            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --surface: #ffffff;
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
-            --border: #e5e7eb;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --bg-dark: #050505;
+            --card-bg: #0f0f0f;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --accent: #fff;
+            --text-main: #ededed;
+            --text-muted: #888;
+            --glow: conic-gradient(from 180deg at 50% 50%, #2a8af6 0deg, #a853ba 180deg, #e92a67 360deg);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--bg-gradient);
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, var(--bg-dark) 70%);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
-            color: var(--text-main);
+            padding: 40px 20px;
         }
 
-        .main-wrapper {
+        /* Ambient background noise */
+        body::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+            position: fixed;
+        }
+
+        .container {
             width: 100%;
-            max-width: 480px;
+            max-width: 600px; /* Widened for table */
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            z-index: 1;
         }
 
-        .card {
-            background: var(--surface);
+        /* Shared Glass Panel Style */
+        .glass-panel {
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
             padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            text-align: center;
-            animation: slideUp 0.5s ease-out;
+            box-shadow: 0 0 0 1px rgba(0,0,0, 0.2), 0 20px 60px rgba(0,0,0,0.6);
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
-        /* Header Styles */
-        .brand {
-            margin-bottom: 30px;
+        .glass-panel:hover {
+            border-color: var(--border-hover);
         }
-        
-        .brand h1 {
-            font-size: 28px;
-            font-weight: 800;
-            color: #111;
-            letter-spacing: -0.5px;
+
+        /* Typography */
+        h1 {
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: -0.04em;
             margin-bottom: 8px;
+            background: linear-gradient(180deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
         }
 
-        .brand span {
-            color: var(--primary);
-        }
-
-        .brand p {
-            color: var(--text-muted);
+        .subtitle {
+            text-align: center;
             font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-weight: 300;
         }
 
-        /* Form Styles */
-        .input-group {
-            text-align: left;
-            margin-bottom: 20px;
-        }
+        /* Inputs & Form */
+        .input-wrapper { position: relative; margin-bottom: 24px; }
 
         label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-main);
+            position: absolute;
+            left: 16px;
+            top: -10px;
+            background: var(--bg-dark);
+            padding: 0 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            z-index: 2;
         }
 
         input {
             width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--border);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.2s ease;
-            color: var(--text-main);
-            background: #f9fafb;
-            font-family: inherit;
+            padding: 16px;
+            font-size: 15px;
+            color: #fff;
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            font-family: 'Inter', sans-serif;
         }
 
         input:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-        }
-
-        input::placeholder {
-            color: #9ca3af;
+            border-color: #666;
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
         }
 
         button {
+            position: relative;
             width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
-        }
-
-        button:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
-        }
-
-        button:active {
-            transform: translateY(1px);
-        }
-
-        /* Result Section (The EJS Part) */
-        .result-container {
-            margin-bottom: 30px;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
             padding: 16px;
             border-radius: 12px;
-            text-align: left;
-            animation: fadeIn 0.4s ease;
+            border: none;
+            background: #fff;
+            color: #000;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.2s;
         }
 
-        .result-label {
-            font-size: 12px;
+        button:hover { transform: scale(0.98); opacity: 0.9; }
+        button:active { transform: scale(0.95); }
+
+        /* Result Box */
+        .result-card {
+            margin-bottom: 30px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, #2a8af6, transparent);
+        }
+
+        .result-title {
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #166534;
+            letter-spacing: 1px;
+            color: #555;
             font-weight: 700;
-            margin-bottom: 4px;
         }
 
         .result-link {
-            font-family: 'Monaco', 'Consolas', monospace;
-            color: #15803d;
-            font-size: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #4ade80;
+            font-size: 14px;
             word-break: break-all;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        /* Footer */
-        .footer {
-            margin-top: 20px;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 13px;
+        /* --- TABLE STYLES (Added these for you) --- */
+        .history-panel {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        thead {
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            padding: 16px 24px;
             font-weight: 500;
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
         }
 
-        /* Animations */
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        td {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+            vertical-align: middle;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: rgba(255, 255, 255, 0.03); }
+
+        .font-mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+        .text-accent { color: #4ade80; }
+        
+        .max-w-cell {
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .credits {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #444;
         }
     </style>
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <div class="card">
-            <div class="brand">
-                <h1>URL <span>Shortener</span></h1>
-                <p>Paste your long link and we'll handle the rest.</p>
-            </div>
+    <div class="container">
+        
+        <div class="glass-panel">
+            <h1>Shorten.io</h1>
+            <p class="subtitle">Minimalist URL Shortener for Professionals</p>
 
             <% if (locals.id) { %>
-                <div class="result-container">
-                    <div class="result-label">Success! Here is your short link:</div>
-                    <div class="result-link">
-                        <span id="shortUrl">http://localhost/url/<%= id %></span>
-                    </div>
+                <div class="result-card">
+                    <span class="result-title">Generated Link</span>
+                    <a href="http://localhost:8001/url/<%= id %>" class="result-link" target="_blank">
+                        http://localhost/url/<%= id %>
+                    </a>
                 </div>
             <% } %>
 
             <form method="POST" action="/url">
-                <div class="input-group">
-                    <label for="url">Destination URL</label>
+                <div class="input-wrapper">
                     <input 
                         type="url" 
-                        id="url" 
                         name="url" 
-                        placeholder="https://example.com/very-long-link" 
-                        required 
+                        placeholder="Paste your long URL here..." 
+                        required
                         autocomplete="off"
                     />
                 </div>
-
-                <button type="submit">Shorten URL</button>
+                <button type="submit">Generate Short Link</button>
             </form>
         </div>
 
-        <div class="footer">
-            Designed & Developed by Shivam
+        <% if (locals.urls && locals.urls.length > 0) { %>
+            <div class="glass-panel history-panel">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Short ID</th>
+                                <th>Redirect Link</th>
+                                <th>Clicks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% urls.forEach((url, index) => { %>
+                                <tr>
+                                    <td><%= index + 1 %></td>
+                                    
+                                    <td class="font-mono text-accent">
+                                        <%= url.shortId %>
+                                    </td>
+                                    
+                                    <td class="max-w-cell">
+                                        <a href="<%= url.redirectURL %>" target="_blank" style="color: #3b82f6; text-decoration: none;">
+                                            <%= url.redirectURL %>
+                                        </a>
+                                    </td>
+                                    
+                                    <td style="padding-left: 32px;">
+                                        <%= url.visitHistory.length %>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <% } %>
+
+        <div class="credits">
+            Designed & Built by Shivam
         </div>
     </div>
 
