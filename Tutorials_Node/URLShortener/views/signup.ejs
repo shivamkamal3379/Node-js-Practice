@@ -3,23 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
+    <title>Sign Up | Shorten.io</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --card-bg: #0f0f0f;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --accent: #fff;
+            --text-main: #ededed;
+            --text-muted: #888;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, var(--bg-dark) 70%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Ambient Noise Texture */
+        body::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px; /* Slightly wider than login to fit 'Full Name' comfortably */
+            padding: 20px;
+            z-index: 1;
+        }
+
+        .glass-panel {
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 0 0 1px rgba(0,0,0, 0.2), 0 20px 60px rgba(0,0,0,0.6);
+            transition: border-color 0.3s ease;
+        }
+
+        .glass-panel:hover {
+            border-color: var(--border-hover);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: -0.04em;
+            margin-bottom: 8px;
+            background: linear-gradient(180deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        /* Floating Label Style */
+        label {
+            position: absolute;
+            left: 16px;
+            top: -10px;
+            background: var(--bg-dark); 
+            padding: 0 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            z-index: 2;
+        }
+
+        input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 15px;
+            color: #fff;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input:focus {
+            border-color: #666;
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            background: #fff;
+            color: #000;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            margin-top: 8px;
+        }
+
+        button:hover { transform: scale(0.98); opacity: 0.9; }
+        button:active { transform: scale(0.95); }
+
+        .footer-link {
+            display: block;
+            text-align: center;
+            margin-top: 24px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
-<h1>SignUp</h1>
 
-<form action="/user" method="post">
-    <label>Full Name</label>
-    <input type="text" required name="name">
+    <div class="container">
+        <div class="glass-panel">
+            <h1>Create Account</h1>
+            <p class="subtitle">Join us to manage your links professionally</p>
 
-    <label>Email </label>
-    <input type="email" required name="email">
+            <form action="/user" method="post">
+                
+                <div class="input-wrapper">
+                    <label>Full Name</label>
+                    <input 
+                        type="text" 
+                        name="name" 
+                        required 
+                        placeholder="John Doe"
+                        autocomplete="name"
+                    >
+                </div>
 
-    <label>Password</label>
-    <input type="password" required name="password">
+                <div class="input-wrapper">
+                    <label>Email Address</label>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        required 
+                        placeholder="john@example.com"
+                        autocomplete="email"
+                    >
+                </div>
 
-    <button type="submit">Sign Up</button>
-</form>
-    
+                <div class="input-wrapper">
+                    <label>Password</label>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        required 
+                        placeholder="Create a strong password"
+                    >
+                </div>
+
+                <button type="submit">Sign Up</button>
+            </form>
+
+            <a href="/login" class="footer-link">Already have an account? Login</a>
+        </div>
+    </div>
+
 </body>
 </html>
