@@ -13,6 +13,21 @@ async function restrictToLoggedinUserOnly(req, res, next) {
     next();
 }
 
+async function checkAuth(req, res , next){
+const userId = req.cookies?.uid;
+
+ 
+    const user = getUser(userId);
+
+ 
+    req.user = user;
+    next();
+
+}
+
+
 module.exports = {
     restrictToLoggedinUserOnly,
+    checkAuth,
+
 };
