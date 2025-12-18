@@ -10,7 +10,13 @@ const client = new Client({ intents:
 
 
 client.on('messageCreate' , (message) =>{
-    console.log(message.content);
+    if(message.author.bot) return ;
+    message.reply(
+        {
+            content : "Hi from Bot"
+        }
+    )
+    console.log(message);
 
 })
 
