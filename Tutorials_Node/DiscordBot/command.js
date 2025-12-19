@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import { DiscordAPIError, REST, Routes } from 'discord.js';
 
 
