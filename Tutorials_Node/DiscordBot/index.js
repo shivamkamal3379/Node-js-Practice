@@ -13,6 +13,12 @@ const client = new Client({ intents:
 
 client.on('messageCreate' , (message) =>{
     if(message.author.bot) return ;
+    if (message.content.startsWith("create")) {
+        const url = message.content.split("create")[1];
+        return message.reply({
+            content : "Generating Short ID For " + url,
+        });
+    }
     message.reply(
         {
             content : "Hi from Bot"
@@ -25,6 +31,7 @@ client.on('messageCreate' , (message) =>{
 client.on("interactionCreate" , (interaction) =>
 {  
       console.log(interaction);
+      interaction.reply("Pong!!!")
 });
 
 client.login(process.env.DISCORD_TOKEN);

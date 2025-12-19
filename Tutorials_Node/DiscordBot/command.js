@@ -5,10 +5,11 @@ import { DiscordAPIError, REST, Routes } from 'discord.js';
 
 const commands = [
   {
-    name: 'ping',
-    description: 'Replies with Pong!',
+    name: 'create',
+    description: 'creates a short URL',
   },
 ];
+
 
 
 
