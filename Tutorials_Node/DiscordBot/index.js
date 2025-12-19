@@ -20,6 +20,4 @@ client.on('messageCreate' , (message) =>{
 
 })
 
-client.login(
-"MTQ1MTEyMTQzMDg3NDk1MTc1MA.GjTkAq.ldrFYdtjezN6YeHfBVfcU4d9TKkSKmICb_k-q0"
-);
+client.login(process.env.DISCORD_TOKEN);
