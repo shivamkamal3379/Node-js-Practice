@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import { Client, Events, GatewayIntentBits } from 'discord.js';
+import { Client, Events, GatewayIntentBits, InteractionCallback } from 'discord.js';
 
 
 
@@ -21,5 +21,10 @@ client.on('messageCreate' , (message) =>{
     console.log(message);
 
 })
+
+client.on("interactionCreate" , (interaction) =>
+{  
+      console.log(interaction);
+});
 
 client.login(process.env.DISCORD_TOKEN);
