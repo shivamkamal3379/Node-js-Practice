@@ -1,5 +1,6 @@
-const {schema , model}= require("mongoose");
+const {Schema , model}= require("mongoose");
 const {createHmac , randomBytes} = require("crypto");
+
 
 
 const userSchema = new Schema ({
@@ -16,8 +17,7 @@ const userSchema = new Schema ({
 
     salt:{
         type: String ,
-        required: true ,
-    },
+     },
     password :{
         type: String ,
         required: true ,
@@ -51,7 +51,7 @@ userSchema.pre('save' , function(next){
 
     this.salt= salt ; 
     this.password = hashedPassword;
-    
+
 
 
 
