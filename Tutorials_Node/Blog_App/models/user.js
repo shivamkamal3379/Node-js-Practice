@@ -1,6 +1,6 @@
 const { createHmac, randomBytes } = require("crypto");
 const { Schema, model } = require("mongoose");
-// const { createTokenForUser } = require("../services/authentication");
+const { createTokenForUser } = require("../services/authentication");
 
 const userSchema = new Schema(
   {
@@ -46,7 +46,7 @@ userSchema.pre("save", function (next) {
   this.salt = salt;
   this.password = hashedPassword;
 
-  next();
+  
 });
 
 userSchema.static(
@@ -65,7 +65,7 @@ userSchema.static(
     if (hashedPassword !== userProvidedHash)
       throw new Error("Incorrect Password");
 
-    // const token = createTokenForUser(user);
+    const token = createTokenForUser(user);
     return token;
   }
 );
