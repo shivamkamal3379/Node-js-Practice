@@ -28,6 +28,8 @@ router.post("/signin", async (req, res) => {
   }
   );
 
+
+ 
 router.get("/logout", (req, res) => {
   res.clearCookie("token").redirect("/");
 });
@@ -41,5 +43,7 @@ router.post("/signup", async (req, res) => {
   });
   return res.redirect("/");
 });
+
+
 
 module.exports = router;
