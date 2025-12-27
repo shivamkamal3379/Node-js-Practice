@@ -3,7 +3,8 @@ const path = require("path")
 const userRoute = require("./routes/user")
 const app = express()
 const mongoose = require ("mongoose")
-
+const cookieParser = require("cookie-parser");
+const { checkForAuthenticationCookie } = require("./middlewares/authentication");
 
 const PORT = 8000;
 
@@ -13,6 +14,9 @@ app.set("view engine" , "ejs")
 app.set("views" , path.resolve("./views"));
  
 app.use(express.urlencoded({extended : false}));
+app.use(cookieParser())
+app.use(checkForAuthenticationCookie())
+
 
 app.get("/" ,(req,res)=>{
     res.render("home");
