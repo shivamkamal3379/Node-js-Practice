@@ -15,11 +15,13 @@ app.set("views" , path.resolve("./views"));
  
 app.use(express.urlencoded({extended : false}));
 app.use(cookieParser())
-app.use(checkForAuthenticationCookie())
+app.use(checkForAuthenticationCookie("token"))
 
 
 app.get("/" ,(req,res)=>{
-    res.render("home");
+    res.render("home" , {
+        user : req.user,
+    });
 } )
 
 
